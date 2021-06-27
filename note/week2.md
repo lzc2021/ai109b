@@ -81,5 +81,4 @@ PS F:\1文件\演算法\ai\ai\02-optimize\01-hillclimbing\04-framework> python .
 【省略】
 ```
 
-![image]()
-![image]()
+
