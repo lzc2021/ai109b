@@ -56,4 +56,100 @@ p超平面上的向量
 #### 定义
 梯度：对于可微的数量场f(x、y、z)，以![image](https://github.com/lzc2021/ai109b/blob/main/image/%E5%9B%BE%E7%89%8712.png)为分量的向量场称为f的梯度或斜量。 
 梯度下降法(gradient descent)是一个最优化算法，常用于机器学习和人工智能当中用来递归性地逼近最小偏差模型。
+#### 缺点
+* 靠近极小值时收敛速度减慢。
+* 直线搜索时可能会产生一些问题。
+* 可能会“之字形”地下降。
+#### code
+* diff.py
+```
+diff(f,2)= 12.006000999997823
+```
+* e.py
+```
+n= 100.0 e(n)= 2.7048138294215285
+n= 200.0 e(n)= 2.711517122929317
+n= 300.0 e(n)= 2.7137651579427837
+.
+.
+.
+n= 9900.0 e(n)= 2.718144554210053
+n= 10000.0 e(n)= 2.7181459268249255
+```
+* gd1.py
+```
+import numpy as np
+from numpy.linalg import norm 
+
+# 函數 f 對變數 k 的偏微分: df / dk
+def df(f, p, k, step=0.01):
+    p1 = p.copy()
+    p1[k] = p[k]+step
+    return (f(p1) - f(p)) / step
+
+# 函數 f 在點 p 上的梯度
+def grad(f, p, step=0.01):
+    gp = p.copy()
+    for k in range(len(p)):
+        gp[k] = df(f, p, k, step)
+    return gp
+
+# 使用梯度下降法尋找函數最低點
+def gradientDescendent(f, p0, step=0.01):
+    p = p0.copy()
+    i = 0
+    while (True):
+        i += 1
+        fp = f(p)
+        gp = grad(f, p) # 計算梯度 gp
+        glen = norm(gp) # norm = 梯度的長度 (步伐大小)
+        print('{:d}:p={:s} f(p)={:.3f} gp={:s} glen={:.5f}'.format(i, str(p), fp, str(gp), glen))
+        if glen < 0.00001:  # 如果步伐已經很小了，那麼就停止吧！
+            break
+        gstep = np.multiply(gp, -1*step) # gstep = 逆梯度方向的一小步
+        p +=  gstep # 向 gstep 方向走一小步
+    return p # 傳回最低點！
+```
+* gdGate.py
+```
+import numpy as np
+import math
+import gd3 as gd
+
+def sig(t):
+    return 1.0/(1.0+math.exp(-t))
+
+o = [0,0,0,1] # and gate outputs
+# o = [0,1,1,1] # or gate outputs
+# o = [0,1,1,0] # xor gate outputs
+def loss(p, dump=False):
+    [w1,w2,b] = p
+    o0 = sig(w1*0+w2*0+b)
+    o1 = sig(w1*0+w2*1+b)
+    o2 = sig(w1*1+w2*0+b)
+    o3 = sig(w1*1+w2*1+b)
+    delta = np.array([o0-o[0], o1-o[1], o2-o[2], o3-o[3]])
+    if dump:
+        print('o0={:.3f} o1={:.3f} o2={:.3f} o3={:.3f}'.format(o0,o1,o2,o3))
+    return np.linalg.norm(delta, 2)
+
+p = [0.0, 0.0, 0.0] # [w1,w2,b] 
+plearn = gd.gradientDescendent(loss, p, max_loops=3000)
+loss(plearn, True)
+```
+* gdNumber.py
+```
+1:p=[1.0, 3.0] f(p)=10.000 gp=[2.009999999999934, 6.009999999999849] glen=6.33721
+2:p=[0.9799 2.9399] f(p)=9.603 gp=[1.9698 5.8898] glen=6.21046
+3:p=[0.960202 2.881002] f(p)=9.222 gp=[1.930404 5.772004] glen=6.08625
+.
+.
+.
+35:p=[1.96547941] f(p)=0.137 gp=[-3.94095882] glen=3.94096
+36:p=[2.004889] f(p)=0.020 gp=[4.019778] glen=4.01978
+37:p=[1.96469122] f(p)=0.140 gp=[-3.93938244] glen=3.93938
+```
+
+> 参考资料：百度百科
+
 
