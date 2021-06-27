@@ -18,21 +18,58 @@
 该算法的基本思路就是训练多个分类器，而各个训练器之间不存在强制的依赖关系，然后再把计算结果求平局值。
 
 #### 概念标准
-Bagging
+Bagging的原理首先是基于自助采样法（bootstrap sampling）随机得到一些样本集训练，用来分别训练不同的基学习器，然后对不同的基学习器得到的结果投票得出最终的分类结果。自助采样法得到的样本大概会有63%的数据样本被使用，剩下的可以用来做验证集。
 
 #### 定义
 Bagging算法，又称为装袋算法，最初由Leo Breiman于1996年提出，是并行式集成学习的典型代表。Bagging算法主要是从数据层面上设计，使用自助采样法随机有放回地对样本进行采样，构建出样本量相等的相互独立的样本数据集，在同一算法中训练出不同的模型。Bagging算法的集成策略也很简单，对于分类问题，一般通过投票法，以多数模型预测结果为最终结果。
 
+[Bagging程式参考](https://github.com/lzc2021/ai109b/blob/main/%E6%9C%9F%E6%9C%AB%E6%8A%A5%E5%91%8A/Bagging.py)
+
 ![image](https://img-blog.csdnimg.cn/2021060315284361.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdV9qdXN0X2xvb2s=,size_16,color_FFFFFF,t_70)
+![image](https://img-blog.csdnimg.cn/20210603153217407.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdV9qdXN0X2xvb2s=,size_16,color_FFFFFF,t_70)
 
+### 随机森林
+随机森林（Random Forest）其实也算Bagging的一种，但是有一点区别是随机森林在构建决策树的时候，会随机选择样本特征中的一部分来进行划分。由于随机森林的二重随机性，它具有良好的学习性能。
 
+#### 自己的话
+该算法的意思就是，数据采集随机，特征选择随机，总而言之就是都是随机的
 
+#### 概念表达
+一群决策树并行放在一起。所以随机森林就是随机采样、随机特征形成的一堆决策树，并行进行计算，然后对计算结果求平局值得到最终的结果。
 
+![image](https://img-blog.csdnimg.cn/20190222094046652.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTMyNTI3NzM=,size_16,color_FFFFFF,t_70)
 
+#### 定义
+随机森林每个决策树的构建，都满足两个条件：随机采样、随机选择特征。只有这样，才能保证各个决策树计算出来的结果，拥有足够的泛化能力。随机森林构建完成后，对于分类任务和回归任务的结果处理也有不同：
+* 分类任务：最终结果等于多数分类器的结果。
+* 回归任务：最终结果等于分类器结果的平均。
+#### 优点
+* 处理高纬度数据，且不用选定特征：因为特征是随机选择的。
+* 计算完成后，可以给出特征的重要程度。
+* 可以做出并行方法，运算速度快。
+* 可以进行可视化展示，便于分析。
+#### 缺点
+解决回归问题时，不能给出连续的输出，造成效果可能不好。
+计算过程是个黑盒子，只能调整参数来改变结果，可解释性差。
 
+### Boosting算法
 
+#### 自己的话
+根本思想类似于“逐步强化”，思路是样本的权重都是相同的，训练得到第一个分类器；根据上一轮的分类效果，调整权重，上一轮分错的样本权重提高，重新训练；之后一直重复以期望达到目的效果。
 
+#### 概念表达
+Boosting算法是一种用来减少监督式学习中偏差的机器学习算法，与Bagging算法不同的是，Boosting串行式集成学习算法。Boosting算法基于错误提升模型性能，根据前面分类器分类错误的样本，调整训练集中各个样本的权重，构建新的分类器。其训练过程是呈阶梯状的，后一个基模型会在前一个基模型的基础上进行学习，最终以某种综合方式，比如加权法，对所有模型的预测结果进行加权来产生最终的结果。
 
+#### 定义
+Boosting，提升算法，它通过反复学习得到一系列弱分类器，然后组合这些弱分类器得到一个强分类器，把弱学习器提升为强学习器的过程。主要分为两个部分，加法模型和向前分步。加法模型就是把一系列的弱学习器相加串联为强学习器，表示如下：
+
+![image](https://img-blog.csdn.net/20180827163353963?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Noa2F5Mzk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+其中h(x; am)是一系列的弱学习器，am是该学习器训练得到的最优参数，βm是对应的弱学习器在强学习器中所占比例的系数。向前分步是指本轮得到的学习器是在上一轮学习器的基础上迭代训练得到的，可以表示为：
+
+![image](https://img-blog.csdn.net/20180827163832137?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Noa2F5Mzk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+同样Boosting的算法族中有很多有名的算法，包括Adaboost、Xgboost、GBDT等。
 
 
 
@@ -48,5 +85,6 @@ Bagging算法，又称为装袋算法，最初由Leo Breiman于1996年提出，�
 ### 参考资料：
 ————————————————
 部分内容为CSDN博主「MonkyK」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处及本声明。
-部分内容为CSDN博主「圈外人」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处及本声明。
+版权声明：本分内容为CSDN博主「圈外人」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/you_just_look/article/details/117517898
 
