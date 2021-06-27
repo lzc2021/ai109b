@@ -72,7 +72,7 @@ EM算法的标准计算框架由E步（Expectation-step）和M步（Maximization
 #### 历史
 EM算法的正式提出来自美国数学家Arthur Dempster、Nan Laird和Donald Rubin，其在1977年发表的研究对先前出现的作为特例的EM算法进行了总结并给出了标准算法的计算步骤，EM算法也由此被称为Dempster-Laird-Rubin算法。1983年，美国数学家吴建福（C.F. Jeff Wu）给出了EM算法在指数族分布以外的收敛性证明。
 
-![image](https://user-images.githubusercontent.com/62127656/121559770-789e5d80-ca49-11eb-818e-4db1eaf1598d.png)
+
 ## K-近邻演算法
 * 透过找出附近邻居的分类定义来自己的类别。
 
@@ -89,7 +89,7 @@ EM算法的正式提出来自美国数学家Arthur Dempster、Nan Laird和Donald
 * 随机森林是由很多决策树构成的，不同决策树之间没有关联。
 
 ![image](https://user-images.githubusercontent.com/62127656/121564216-cc12aa80-ca4d-11eb-8bf4-60de02c5445d.png)
-![image](https://user-images.githubusercontent.com/62127656/121564184-c026e880-ca4d-11eb-9251-43e4787bc6de.png)
+
 ## 支援向量机 Support Vector Machine (SVM)
 * 是一种二分类模型
 * 在分类与迴归分析中分析资料的监督式学习模型与相关的学习演算法。
