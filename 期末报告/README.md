@@ -70,21 +70,28 @@ Boosting，提升算法，它通过反复学习得到一系列弱分类器，然
 ![image](https://img-blog.csdn.net/20180827163832137?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Noa2F5Mzk5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 同样Boosting的算法族中有很多有名的算法，包括Adaboost、Xgboost、GBDT等。
+* Adaboost，基于对Boosting的理解，对Aboost需要弄清楚：①h(x; am)每次迭代都会根据上一轮来计算每个样本的权重，上一轮被分类错误的被赋予更大的权重，分类正确的权值变小，这理解为在决策面附近的点被分错的可能性很大所以需要加大权重，在计算时被更加重视，或者上轮计算结果与正确结果的残差被拿来重点分析；②βm的计算与学习器的误差率有关，误差率越低则该学习器所占比例的系数越高。
 
+### Stacking集成学习算法
 
+#### 自己的话
+基本思想就是把样本分为n份，使用n个分类器对样本进行计算；计算的结果作为下一层分类器的输入；不断迭代，直到达到迭代的次数限制为止。
 
+#### 概念表达
+Stacking是一种分层模型集成框架，在1992年被Wolpert提出。Stacking集成可以有多层的情况，但通常会设计两层，第一层由多种基模型组成，输入为原始训练集，而输出为各种基模型的预测值，而第二层只有一个元模型，对第一层的各种模型的预测值和真实值进行训练，从而得到完成的集成模型。同理，预测测试集的过程也要先经过所有基模型的预测，组成第二层的特征，再用第二层的元模型预测出最终的结果。为了防止模型过拟合的情况，一般Stacking算法在第一层训练基模型时会结合k折交叉验证法。以五折交叉验证法为例，Stacking算法的过程如图3.1所示。
 
+![image](https://img-blog.csdnimg.cn/20210603153507889.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdV9qdXN0X2xvb2s=,size_16,color_FFFFFF,t_70)
 
-
-
-
-
+#### 定义
+Stacking算法原理很简单，以两层结构为例，在训练阶段，假设有训练集数据D={(x1,y1), (x2,y2), … , xn,yn}，根据5折交叉验证法被随机划分为5个大小相似且互斥的数据子集D1、D2、D3、D4和D5。分别以其中一个数据子集为验证集，其他4个为训练集，来训练第一层的基模型BM1,BM2, … , BMn，每个基模型都被训练5次。以第一个基模型BM1为例，对验证集进行预测，分别得到p1,p2,p3,p4和p5，组成原数据集大小的prob1。以此类推，得到prob1, prob2, prob3, … , probn作为第二层元模型的特征，与真实值label组成第二层的数据集，用于元模型训练。
 
 
 
 ### 参考资料：
 ————————————————
-部分内容为CSDN博主「MonkyK」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处及本声明。
-版权声明：本分内容为CSDN博主「圈外人」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+版权声明：本文部分内容为CSDN博主「MonkyK」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/chkay399/article/details/82051312
+
+版权声明：本分部分内容为CSDN博主「圈外人」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/you_just_look/article/details/117517898
 
