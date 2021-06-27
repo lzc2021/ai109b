@@ -12,7 +12,7 @@
 
 ## Note
 
-週次 | 内容
+周数 | 内容
 ---- | ----
 [第一周](https://github.com/lzc2021/ai109b/blob/main/note/week1.md) |  评分方式<br>  课程地图<br>  课程须知<br>  人工智慧<br> 爬山演算法
 [第二周](https://github.com/lzc2021/ai109b/blob/main/note/week2.md) | 爬山演算法<br> 模拟退火法
