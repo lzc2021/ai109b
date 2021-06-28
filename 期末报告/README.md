@@ -60,6 +60,8 @@ Bagging算法，又称为装袋算法，最初由Leo Breiman于1996年提出，�
 #### 概念表达
 Boosting算法是一种用来减少监督式学习中偏差的机器学习算法，与Bagging算法不同的是，Boosting串行式集成学习算法。Boosting算法基于错误提升模型性能，根据前面分类器分类错误的样本，调整训练集中各个样本的权重，构建新的分类器。其训练过程是呈阶梯状的，后一个基模型会在前一个基模型的基础上进行学习，最终以某种综合方式，比如加权法，对所有模型的预测结果进行加权来产生最终的结果。
 
+![image](https://img-blog.csdnimg.cn/20210603153345680.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdV9qdXN0X2xvb2s=,size_16,color_FFFFFF,t_70)
+
 #### 定义
 Boosting，提升算法，它通过反复学习得到一系列弱分类器，然后组合这些弱分类器得到一个强分类器，把弱学习器提升为强学习器的过程。主要分为两个部分，加法模型和向前分步。加法模型就是把一系列的弱学习器相加串联为强学习器，表示如下：
 
