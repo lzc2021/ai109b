@@ -185,7 +185,7 @@ Stacking算法原理很简单，以两层结构为例，在训练阶段，假设
 ```
 
 > 参考资料：
-————————————————
+
 
 版权声明：本文部分内容为CSDN博主「MonkyK」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/chkay399/article/details/82051312
@@ -195,3 +195,5 @@ Stacking算法原理很简单，以两层结构为例，在训练阶段，假设
 
 版权声明：本文部分内容为CSDN博主「a_achengsong」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/csqazwsxedc/article/details/72354206
+
+部分程式以及文章内容博客园-小舔哥
